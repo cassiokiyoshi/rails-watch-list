@@ -1,0 +1,108 @@
+<div data-controller="bookmark">
+
+  <div class="modal fade" id="addMovieModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Add a movie</h5>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal">
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <input
+            type="text"
+            id="movie-search"
+            class="form-control mb-3"
+            placeholder="Search for a movie..."
+          >
+
+          <div id="movie-list">
+            <% Movie.all.each do |movie| %>
+
+              <div class="movie-item d-flex justify-content-between align-items-center mb-3">
+
+                <div class="d-flex align-items-center gap-3">
+                  <img
+                    src="<%= movie.poster_url %>"
+                    alt="<%= movie.title %>"
+                    style="width: 60px;"
+                  >
+
+                  <div>
+                    <h6 class="mb-0"><%= movie.title %></h6>
+
+                    <small>
+                      <i class="fa-solid fa-star"></i>
+                      <%= movie.rating.round(1) %>
+                    </small>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  class="btn btn-dark rounded-pill"
+                  data-action="click->bookmark#selectMovie"
+                  data-movie-id="<%= movie.id %>"
+                  data-bs-toggle="modal"
+                  data-bs-target="#commentModal">
+                  Add
+                </button>
+
+              </div>
+
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="commentModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Add a comment</h5>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal">
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <%= simple_form_for [@list, Bookmark.new] do |f| %>
+
+            <%= f.input :movie_id,
+                        as: :hidden,
+                        input_html: {
+                          data: { bookmark_target: "movieId" }
+                        } %>
+
+            <%= f.input :comment,
+                        placeholder: "What did you think?",
+                        label: "Comment" %>
+
+            <%= f.submit "Add movie",
+                         class: "btn btn-dark rounded-pill" %>
+
+          <% end %>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

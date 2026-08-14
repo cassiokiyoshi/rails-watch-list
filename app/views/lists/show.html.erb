@@ -1,0 +1,103 @@
+<div class="banner">
+
+  <div
+    class="banner-bg banner-bg-1"
+    style="background-image:
+      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+      url('<%= @list.movies.sample.poster_url if @list.movies.sample %>');">
+  </div>
+
+  <div
+    class="banner-bg banner-bg-2"
+    style="background-image:
+      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+      url('<%= @list.movies.sample.poster_url if @list.movies.sample %>');">
+  </div>
+
+  <div
+    class="banner-bg banner-bg-3"
+    style="background-image:
+      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+      url('<%= @list.movies.sample.poster_url if @list.movies.sample %>');">
+  </div>
+
+  <div
+    class="banner-bg banner-bg-4"
+    style="background-image:
+      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+      url('<%= @list.movies.sample.poster_url if @list.movies.sample %>');">
+  </div>
+
+  <div
+    class="banner-bg banner-bg-5"
+    style="background-image:
+      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+      url('<%= @list.movies.sample.poster_url if @list.movies.sample %>');">
+  </div>
+
+  <div class="container">
+    <h1><%= @list.name %></h1>
+  </div>
+
+</div>
+
+<div class="container" data-controller="bookmark">
+
+  <div class="d-flex align-items-center justify-content-around m-2 p-2">
+    <h1>Movies</h1>
+
+    <div class="d-flex flex-column">
+      <button
+        type="button"
+        class="btn btn-dark rounded-pill m-1 px-4"
+        data-bs-toggle="modal"
+        data-bs-target="#addMovieModal">
+        + Add movie
+      </button>
+
+      <%= render "components/modal_search" %>
+    </div>
+  </div>
+
+    <!-- End Search -->
+      <%# <%= button_to "Delete list",
+                list_path(@list),
+                method: :delete,
+                class: "btn btn-danger rounded-pill m-1 px-4",
+                data: { turbo_confirm: "Are you sure you want to delete this list?" } %>
+</div>
+
+</div>
+ <div class="cards">
+  <% @list.bookmarks.each do |bookmark| %>
+    <% movie = bookmark.movie %>
+
+    <div class="card-trip">
+      <img src="<%= movie.poster_url %>" />
+
+      <div class="card-trip-infos">
+        <div>
+          <h2><%= movie.title %></h2>
+          <p><%= movie.overview %></p>
+        </div>
+
+        <h2 class="card-trip-pricing">
+          <%= format("%.1f", movie.rating) %>
+        </h2>
+
+        <%= link_to bookmark_path(bookmark),
+              class: "mx-1 text-decoration-none text-black",
+              data: {
+                turbo_method: :delete,
+                turbo_confirm: "Remove this movie from the list?"
+              } do %>
+          <i class="fa-solid fa-trash-can"></i>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+</div>
+
+<div data-controller="movie">
+</div>

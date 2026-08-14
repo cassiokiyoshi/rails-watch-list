@@ -1,0 +1,81 @@
+.banner {
+  position: relative;
+  padding: 150px 0;
+  overflow: hidden;
+}
+
+.banner-bg {
+  position: absolute;
+  inset: 0;
+
+  background-size: cover;
+  background-position: center;
+
+  opacity: 0;
+
+  animation-name: bannerFade;
+  animation-duration: 30s;
+  animation-iteration-count: infinite;
+}
+
+.banner-bg-1 {
+  animation-delay: 0s;
+}
+
+.banner-bg-2 {
+  animation-delay: 10s;
+}
+
+.banner-bg-3 {
+  animation-delay: 20s;
+}
+
+.banner-bg-4 {
+  animation-delay: 20s;
+}
+
+.banner-bg-5 {
+  animation-delay: 20s;
+}
+
+.banner .container {
+  position: relative;
+  z-index: 2;
+}
+
+.banner h1 {
+  margin: 0;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.banner p {
+  font-size: 20px;
+  color: white;
+  opacity: .7;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+@keyframes bannerFade {
+  0% {
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  35% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,79 @@
+<div class="modal fade" id="addMovieModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Add a movie</h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal">
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <input
+          type="text"
+          id="movie-search"
+          class="form-control mb-3"
+          placeholder="Search for a movie..."
+        >
+
+        <div id="movie-list">
+
+          <% Movie.all.each do |movie| %>
+
+            <div class="movie-item mb-4 d-flex justify-content-between">
+
+              <div class="d-flex align-self-center  gap-3 mb-2">
+
+                <img
+                  src="<%= movie.poster_url %>"
+                  alt="<%= movie.title %>"
+                  style="width: 60px;"
+                >
+
+                <div>
+                  <h6 class="mb-0">
+                    <%= movie.title %>
+                  </h6>
+
+                  <small>
+                    <i class="fa-solid fa-star"></i>
+                    <%= movie.rating.round(1) %>
+                  </small>
+                </div>
+
+              </div>
+
+              <%= simple_form_for [@list, Bookmark.new] do |f| %>
+
+                <%= f.input :movie_id,
+                            as: :hidden,
+                            input_html: { value: movie.id } %>
+                <div class="d-flex align-self-center">
+                  <div class="m-2">
+                  <%= f.input :comment,
+                              label: false,
+                              placeholder: "Add a comment..." %>
+                  </div>
+                  <div class="m-2">
+                  <%= f.submit "Add movie",
+                              class: "btn btn-dark rounded-pill" %>
+                  </div>
+                </div>
+              <% end %>
+
+            </div>
+
+          <% end %>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
