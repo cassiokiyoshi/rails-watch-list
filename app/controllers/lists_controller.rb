@@ -12,8 +12,7 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    raise
-    @list = BookListmark.find(params[:id])
+    @list = List.find(params[:id])
 
     @list.destroy
 

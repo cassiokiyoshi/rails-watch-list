@@ -13,8 +13,9 @@
 
   opacity: 0;
 
-  animation-name: bannerFade;
-  animation-iteration-count: infinite;
+  animation:
+    bannerFade 12s infinite,
+    bannerPan 12s ease-in-out infinite;
 }
 
 .banner-bg-no-animation {
@@ -57,5 +58,15 @@
 
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes bannerPan {
+  0% {
+    background-position: center 25%;
+  }
+
+  100% {
+    background-position: center 45%;
   }
 }
