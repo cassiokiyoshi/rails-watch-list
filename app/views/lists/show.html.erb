@@ -1,45 +1,35 @@
+<%
+  movies = @list.movies.sample(10)
+  images = movies.map(&:poster_url).compact
+
+  if @list.photo.attached?
+    images.unshift(cl_image_path(@list.photo.key))
+  end
+
+  if images.empty?
+    images << asset_path("defaultbgcinema.jpg")
+  end
+
+  duration = images.size * 5
+%>
+
 <div class="banner">
-
-  <div
-    class="banner-bg banner-bg-1"
-    style="background-image:
-      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-      url('<%= @list.photo ? @list.photo.key : asset_path("defaultbgcinema.jpg") %>');">
-  </div>
-
-  <div
-    class="banner-bg banner-bg-2"
-    style="background-image:
-      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-      url('<%= @list.movies.sample.poster_url if @list.movies.sample %>');">
-  </div>
-
-  <div
-    class="banner-bg banner-bg-3"
-    style="background-image:
-      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-      url('<%= @list.movies.sample.poster_url if @list.movies.sample %>');">
-  </div>
-
-  <div
-    class="banner-bg banner-bg-4"
-    style="background-image:
-      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-      url('<%= @list.movies.sample.poster_url if @list.movies.sample %>');">
-  </div>
-
-  <div
-    class="banner-bg banner-bg-5"
-    style="background-image:
-      linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-      url('<%= @list.movies.sample.poster_url if @list.movies.sample %>');">
-  </div>
+  <% images.each_with_index do |image, index| %>
+    <div
+      class="<%= images.size > 1 ? "banner-bg" : "banner-bg-no-animation" %>"
+      style="
+        background-image: url('<%= image %>');
+        animation-duration: <%= duration %>s;
+        animation-delay: <%= index * 5 %>s;
+      ">
+    </div>
+  <% end %>
 
   <div class="container">
     <h1><%= @list.name %></h1>
   </div>
-
 </div>
+
 
 <div class="container" data-controller="bookmark">
 
@@ -59,20 +49,13 @@
     </div>
   </div>
 
-    <!-- End Search -->
-      <%# <%= button_to "Delete list",
-                list_path(@list),
-                method: :delete,
-                class: "btn btn-danger rounded-pill m-1 px-4",
-                data: { turbo_confirm: "Are you sure you want to delete this list?" } %>
-</div>
 
-</div>
   <div class="cards m-5">
     <% @list.bookmarks.each do |bookmark| %>
       <% movie = bookmark.movie %>
 
-      <div class="card-trip">
+      <div class="card-trip category">
+
         <img src="<%= movie.poster_url %>" />
 
         <div class="card-trip-infos">
@@ -91,13 +74,18 @@
                   turbo_method: :delete,
                   turbo_confirm: "Remove this movie from the list?"
                 } do %>
+
             <i class="fa-solid fa-trash-can"></i>
+
           <% end %>
         </div>
       </div>
+
     <% end %>
   </div>
+
 </div>
+
 
 <div data-controller="movie">
 </div>
