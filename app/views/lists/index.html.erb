@@ -1,14 +1,24 @@
 <%= render "components/banner" %>
 <div class="container">
-<h2>My lists</h2>
+<h2 class="m-3">My lists</h2>
   <div class="cards">
     <%@lists.each do |list|%>
       <% movie = list.movies.sample %>
-        <%= link_to list_path(list), class: "card-link" do %>
+        <%= link_to list_path(list), class: "card-link" do               %>
+        <%   image = if movie && list.photo.key?                         %>
+        <%     [cl_image_path(list.photo.key), movie.poster_url].sample  %>
+        <%   elsif movie                                                 %>
+        <%      movie.poster_url                                         %>
+        <%   elsif list.photo.key?                                       %>
+        <%      cl_image_path(list.photo.key)                            %>
+        <%   else                                                        %>
+        <%      asset_path("defaultbgcinema.jpg")                        %>
+        <%   end                                                         %>
+
           <div
               class="card-category"
               style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-              url('<%= movie.poster_url if movie %>')">
+              url('<%= image %>')">
             <%= list.name %>
           </div>
         <% end %>

@@ -4,7 +4,7 @@
     class="banner-bg banner-bg-1"
     style="background-image:
       linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-      url('<%= @list.movies.sample.poster_url if @list.movies.sample %>');">
+      url('<%= @list.photo ? @list.photo.key : asset_path("defaultbgcinema.jpg") %>');">
   </div>
 
   <div
@@ -68,35 +68,35 @@
 </div>
 
 </div>
- <div class="cards">
-  <% @list.bookmarks.each do |bookmark| %>
-    <% movie = bookmark.movie %>
+  <div class="cards m-5">
+    <% @list.bookmarks.each do |bookmark| %>
+      <% movie = bookmark.movie %>
 
-    <div class="card-trip">
-      <img src="<%= movie.poster_url %>" />
+      <div class="card-trip">
+        <img src="<%= movie.poster_url %>" />
 
-      <div class="card-trip-infos">
-        <div>
-          <h2><%= movie.title %></h2>
-          <p><%= movie.overview %></p>
+        <div class="card-trip-infos">
+          <div>
+            <h2><%= movie.title %></h2>
+            <p><%= movie.overview %></p>
+          </div>
+
+          <h2 class="card-trip-pricing">
+            <%= format("%.1f", movie.rating) %>
+          </h2>
+
+          <%= link_to bookmark_path(bookmark),
+                class: "mx-1 text-decoration-none text-black",
+                data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Remove this movie from the list?"
+                } do %>
+            <i class="fa-solid fa-trash-can"></i>
+          <% end %>
         </div>
-
-        <h2 class="card-trip-pricing">
-          <%= format("%.1f", movie.rating) %>
-        </h2>
-
-        <%= link_to bookmark_path(bookmark),
-              class: "mx-1 text-decoration-none text-black",
-              data: {
-                turbo_method: :delete,
-                turbo_confirm: "Remove this movie from the list?"
-              } do %>
-          <i class="fa-solid fa-trash-can"></i>
-        <% end %>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
 </div>
 
 <div data-controller="movie">

@@ -18,6 +18,14 @@
   animation-iteration-count: infinite;
 }
 
+.banner-bg-no-animation {
+  position: absolute;
+  inset: 0;
+
+  background-size: cover;
+  background-position: center;
+}
+
 .banner-bg-1 {
   animation-delay: 0s;
 }
